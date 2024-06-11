@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基于MxGPT的医学影像分割诊断</title>
+    <link rel="stylesheet" type="text/css" href="./static/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>UNet 图像分割诊断</h1>
+    <div class="upload-section">
+        <label for="fileInput" class="file-label">Upload an Image</label>
+        <input type="file" id="fileInput" accept="image/*">
+    </div>
+    <div class="image-section">
+        <div class="image-wrapper no-image" id="inputImageWrapper">
+            <img id="inputImage" class="image" src="" alt="Input Image">
+        </div>
+        <div class="image-wrapper no-image" id="outputImageWrapper">
+            <img id="outputImage" class="image" src="" alt="Segmented Image">
+        </div>
+    </div>
+    <button id="segmentButton">开始分割诊断</button>
+</div>
+<script src="./static/script.js"></script>
+</body>
+</html>
