@@ -6,7 +6,7 @@
 flask --app loadURL.py --debug run
 ```
 
-或者是，直接执行seg.py文件
+或者是，直接执行loadURL.py文件
 
 **注意，最外面的那个index.html是为了方便调试启动的，并不是真正会调用的html
 真实的项目html在templates文件夹下**
