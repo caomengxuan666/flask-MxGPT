@@ -28,3 +28,6 @@ def segment():
     mask_image.save(byte_io, 'PNG')
     byte_io.seek(0)
     return send_file(byte_io, mimetype='image/png')
+
+if __name__ == '__main__':
+    app.run(debug=True)
