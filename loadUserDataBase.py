@@ -17,11 +17,13 @@ POOL = PooledDB(
     user='root',
     password='mx123321',
     charset='utf8',
-    db='flask'
+    db='mxgpt'
 )
+
 
 def get_db_connection():
     return POOL.connection()
+
 
 def register_user(username, password):
     hashed_password = hashlib.sha256(password.encode()).hexdigest()
@@ -29,12 +31,14 @@ def register_user(username, password):
 
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO users (id, username, password) VALUES (%s, %s, %s)", (user_id, username, hashed_password))
+    cursor.execute("INSERT INTO users (id, username, password) VALUES (%s, %s, %s)",
+                   (user_id, username, hashed_password))
     conn.commit()
     cursor.close()
     conn.close()
 
     return user_id
+
 
 def validate_user(username, password):
     hashed_password = hashlib.sha256(password.encode()).hexdigest()

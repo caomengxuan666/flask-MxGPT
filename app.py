@@ -10,10 +10,12 @@ from PIL import Image
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
+
 # 加载主页
 @app.route('/', methods=['GET'])
 def load_website():
     return render_template('index.html')
+
 
 # 注册
 @app.route('/register', methods=['GET', 'POST'])
@@ -31,6 +33,7 @@ def register():
 
     return render_template('register.html')
 
+
 # 登录
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -47,11 +50,13 @@ def login():
 
     return render_template('login.html')
 
+
 # 登出
 @app.route('/logout')
 def logout():
     session.pop('username', None)
     return redirect(url_for('load_website'))
+
 
 # 诊断的按钮事件
 @app.route('/segment', methods=['POST'])
@@ -66,6 +71,7 @@ def segment():
     mask_image.save(byte_io, 'PNG')
     byte_io.seek(0)
     return send_file(byte_io, mimetype='image/png')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
