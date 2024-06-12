@@ -21,7 +21,7 @@ document.getElementById('fileInput').addEventListener('change', function(event) 
     }
 });
 
-document.querySelector('.file-label').addEventListener('click', function() {
+document.querySelector('.file-label').addEventListener('click', function(event) {
     event.preventDefault(); // 取消点击事件的默认行为
     document.getElementById('fileInput').click();
 });
