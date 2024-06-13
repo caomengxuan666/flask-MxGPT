@@ -22,3 +22,9 @@ flask --app app.py --debug run
 ### v1.3.0:
 * 增加了主页导航分页的功能，实现跳转。
 * 实现了服务器部署的部分
+* 实现服务器部署和本地调试的参数化切换, **默认为local**
+
+* ***如果要指定项目模式，请在控制台输入***
+```angular2html
+python3 app.py --mode=[local|server]
+```
