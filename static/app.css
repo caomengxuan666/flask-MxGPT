@@ -1,0 +1,63 @@
+/* 基础样式 */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #666;
+}
+
+section {
+    margin: 20px 0;
+}
+
+#cta-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 0 10px;
+}
+
+.primary {
+    background-color: #007BFF;
+    color: white;
+}
+
+.secondary {
+    background-color: #6C757D;
+    color: white;
+}
+
+.third{
+    background-color: darkcyan;
+    color: coral;
+}
+
+.third:hover{
+    background-color: #4cae4c; /* 深绿色，增强交互反馈 */
+    opacity: 0.9;
+}
+
+.button:hover {
+    opacity: 0.9;
+}
