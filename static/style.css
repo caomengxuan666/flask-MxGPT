@@ -94,3 +94,11 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+.button.third {
+    background-color: #5cb85c; /* 保持原有的背景色 */
+    color: white;
+    border: 1px solid #4cae4c; /* 添加边框样式，这里假设使用与hover时相似的颜色，宽度为1px，样式为实线 */
+}
+
+/* 保持其他样式不变 */

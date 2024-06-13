@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MxGPT - AI医疗协作平台</title>
+    <link rel="stylesheet" href="../static/app.css">
+    <style>
+        /* 简单的内联样式补充，根据需要调整 */
+        section {
+            margin-bottom: 40px;
+        }
+        .team-member {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .team-member img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+        }
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<header class="header-banner">
+    <h1>欢迎来到MxGPT - 您的全方位AI医疗助手</h1>
+    <p>融合多智能体Metagpt技术，模拟真实医疗团队，提供个性化医疗服务</p>
+</header>
+
+<main>
+
+    <section id="introduction">
+        <h2>我们的愿景</h2>
+        <p>结合顶尖AI与医疗专业知识，MxGPT致力于构建一个高效、安全、人性化的智能医疗协作系统，让每个人都能享受到高质量的医疗服务。</p>
+    </section>
+
+    <section id="team-features">
+        <h2>核心团队成员</h2>
+        <div class="team-members">
+            <div class="team-member">
+                <img src="/images/icon_doctor.svg" alt="主治医生图标">
+                <div>
+                    <h3>主治医生AI</h3>
+                    <p>提供专业诊断建议，个性化治疗方案。</p>
+                </div>
+            </div>
+            <!-- 重复上述结构以添加其他角色，如外科医生、护士等 -->
+        </div>
+    </section>
+
+    <section id="carousel">
+        <h2>案例展示</h2>
+        <!-- 实现轮播图的JS和CSS需外部引入或自定义 -->
+        <div class="carousel">
+            <div class="carousel-item active">
+                <img src="/images/case_study_1.jpg" alt="案例研究1">
+            </div>
+            <div class="carousel-item">
+                <img src="/images/case_study_2.jpg" alt="案例研究2">
+            </div>
+            <!-- 更多案例项 -->
+        </div>
+    </section>
+
+    <section id="cta-buttons" class="cta-buttons">
+        <a href="{{ url_for('register') }}" class="button primary">立即体验</a>
+        <a href="{{ url_for('login') }}" class="button secondary">已有账号？登录</a>
+        <a href="{{ url_for('segmentPage') }}" class="button third">开始诊断</a>
+    </section>
+
+</main>
+
+<footer>
+    <p>&copy; 2024 MxGPT Company. All rights reserved.</p>
+    <nav>
+        <a href="#">关于我们</a> | <a href="#">联系我们</a> | <a href="#">隐私政策</a>
+    </nav>
+</footer>
+
+<!-- JavaScript for carousel or other dynamic elements -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+<script>
+    // 初始化轮播图插件示例代码（如果使用Slick Carousel）
+    $('.carousel').slick({
+        dots: true,
+        infinite: true,
+        speed: 300,
+        slidesToShow: 1,
+        adaptiveHeight: true
+    });
+</script>
+</body>
+</html>
