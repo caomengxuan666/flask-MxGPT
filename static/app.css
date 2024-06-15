@@ -61,3 +61,42 @@ section {
 .button:hover {
     opacity: 0.9;
 }
+
+/* 用户显示 */
+/* 导航栏样式 */
+.navbar {
+    background-color: #f8f9fa; /* 背景色可以根据你的设计调整 */
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 100;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.navbar li.user-info {
+    float: right;
+    margin-right: 20px;
+    text-align: right;
+}
+
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.username, .not-logged {
+    display: inline-block;
+    vertical-align: middle;
+    color: #343a40;
+    font-weight: bold;
+}

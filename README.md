@@ -28,3 +28,8 @@ flask --app app.py --debug run
 ```angular2html
 python3 app.py --mode=[local|server]
 ```
+
+### v1.4.0:
+* 成功在本地连接到服务器的MySQL数据库，实现本地和服务器的数据库的同步和远程管理。
+* 修改了注册的逻辑，将**uuid**和**username**作为主键，实现用户唯一性。并且注册失败会显示信息。
+* 修改了登录的逻辑，当登录失败的时候会显示信息。
