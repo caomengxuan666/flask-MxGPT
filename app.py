@@ -13,17 +13,10 @@ import os
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
-
 # 加载主页
 @app.route('/', methods=['GET'])
 def load_website():
     return render_template('app.html')
-
-# 加载图标
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 # 注册
 @app.route('/register', methods=['GET', 'POST'])
