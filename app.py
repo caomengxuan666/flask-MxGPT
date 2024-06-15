@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file, render_template, flash, redirect, url_for, session
+from flask import Flask, request, send_file, render_template, flash, redirect, url_for, session,send_from_directory
 from loadUserDataBase import register_user, validate_user
 from seg import segment_image
 import cv2
@@ -7,17 +7,16 @@ import io
 from PIL import Image
 from gevent import pywsgi
 import argparse
+import os
 
 # 创建app项目
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
-
 # 加载主页
 @app.route('/', methods=['GET'])
 def load_website():
     return render_template('app.html')
-
 
 # 注册
 @app.route('/register', methods=['GET', 'POST'])
