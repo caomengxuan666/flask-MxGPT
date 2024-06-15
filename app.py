@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file, render_template, flash, redirect, url_for, session
+from flask import Flask, request, send_file, render_template, flash, redirect, url_for, session,send_from_directory
 from loadUserDataBase import register_user, validate_user
 from seg import segment_image
 import cv2
@@ -7,6 +7,7 @@ import io
 from PIL import Image
 from gevent import pywsgi
 import argparse
+import os
 
 # 创建app项目
 app = Flask(__name__)
@@ -18,6 +19,11 @@ app.secret_key = 'your_secret_key'
 def load_website():
     return render_template('app.html')
 
+# 加载图标
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 # 注册
 @app.route('/register', methods=['GET', 'POST'])
