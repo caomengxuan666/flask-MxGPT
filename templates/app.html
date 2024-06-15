@@ -6,6 +6,10 @@
     <title>MxGPT - AI医疗协作平台</title>
     <link rel="stylesheet" href="../static/app.css">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+    <!-- 引入自定义的JavaScript文件 -->
+    <script src="{{ url_for('static', filename='custom.js') }}"></script>
+
     <style>
         /* 简单的内联样式补充，根据需要调整 */
         section {
@@ -37,7 +41,72 @@
 <header class="header-banner">
     <h1>欢迎来到MxGPT - 您的全方位AI医疗助手</h1>
     <p>融合多智能体Metagpt技术，模拟真实医疗团队，提供个性化医疗服务</p>
+    <ul class="custom-navbar-nav ms-auto align-items-center" style="float: right">
+        <li class="custom-nav-item dropdown position-relative">
+            <a class="custom-nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                {% if session.get('username') %}
+                    <img src="{{ url_for('user_avatar', username=session['username']) }}" alt="用户头像" width="30" height="30" class="rounded-circle me-2">
+                    <span class="username-text">{{ session['username'] }}</span>
+                {% else %}
+                    <span class="not-logged d-none d-md-inline-block">未登录</span>
+                {% endif %}
+                <i class="fas fa-angle-down ms-2 d-none d-lg-inline-block"></i>
+            </a>
+
+            <!-- 下拉菜单样式调整 -->
+            <div class="dropdown-menu custom-dropdown-menu" style="display: flex; position: absolute; top: 100%; right: 0;" aria-labelledby="userDropdown">
+                {% if session.get('username') %}
+                    <a class="dropdown-item d-flex align-items-center" href="#" data-bs-toggle="modal" data-bs-target="#avatarModal">
+                        <i class="fas fa-user-circle me-2"></i>更换头像
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ url_for('logout') }}">
+                        <i class="fas fa-sign-out-alt me-2"></i>登出
+                    </a>
+                {% else %}
+                    <a class="dropdown-item" href="{{ url_for('login') }}">
+                        <i class="fas fa-sign-in-alt me-2"></i>登录
+                    </a>
+                    <a class="dropdown-item" href="{{ url_for('register') }}">
+                        <i class="fas fa-user-plus me-2"></i>注册
+                    </a>
+                {% endif %}
+            </div>
+        </li>
+    </ul>
 </header>
+
+<!-- 美化后的导航栏区域 -->
+<nav class="custom-navbar custom-navbar-light bg-white shadow-sm">
+    <div class="container-fluid">
+        <!-- 品牌链接等其他导航元素可以在此处添加 -->
+
+        <!-- 优化用户信息及操作区域 -->
+
+    </div>
+</nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var dropdownToggle = document.getElementById('userDropdown');
+        var dropdownMenu = dropdownToggle.nextElementSibling;
+
+        dropdownToggle.addEventListener('click', function(event) {
+            event.preventDefault();
+            dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+            this.setAttribute('aria-expanded', dropdownMenu.style.display === 'block');
+        });
+
+        // 添加一个全局点击事件监听器，用于关闭打开的下拉菜单
+        document.addEventListener('click', function(event) {
+            if (!dropdownToggle.contains(event.target)) {
+                dropdownMenu.style.display = 'none';
+                dropdownToggle.setAttribute('aria-expanded', false);
+            }
+        });
+    });
+</script>
+
 
 <main>
 
@@ -75,10 +144,16 @@
         </div>
     </section>
 
+
     <section id="cta-buttons" class="cta-buttons">
         <a href="{{ url_for('register') }}" class="button primary">立即体验</a>
         <a href="{{ url_for('login') }}" class="button secondary">已有账号？登录</a>
         <a href="{{ url_for('segmentPage') }}" class="button third">开始诊断</a>
+
+        <!-- 新增登出链接，仅当用户已登录（即session中有'username'）时显示 -->
+        {% if session.get('username') %}
+            <a href="{{ url_for('logout') }}" class="button logout">登出</a>
+        {% endif %}
     </section>
 
 </main>
@@ -103,5 +178,6 @@
         adaptiveHeight: true
     });
 </script>
+
 </body>
 </html>

@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file, render_template, flash, redirect, url_for, session,send_from_directory
+from flask import Flask, request, send_file, render_template, flash, redirect, url_for, session, send_from_directory
 from loadUserDataBase import register_user, validate_user
 from seg import segment_image
 import cv2
@@ -13,10 +13,18 @@ import os
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
+
 # 加载主页
 @app.route('/', methods=['GET'])
 def load_website():
     return render_template('app.html')
+
+
+# 加载用户头像
+@app.route('/user_avatar', methods=['GET'])
+def user_avatar():
+    return send_from_directory('static', 'user_avatar.jpg')
+
 
 # 注册
 @app.route('/register', methods=['GET', 'POST'])
@@ -24,13 +32,16 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        user_id = register_user(username, password)
 
-        if user_id:
-            flash('Registration successful. Please login.')
-            return redirect(url_for('login'))
-        else:
-            flash('Registration failed. Please try again.')
+        try:
+            user_id = register_user(username, password)
+            if user_id:
+                flash('Registration successful. Please login.', 'success')
+                return redirect(url_for('login'))
+            else:
+                flash('An unexpected error occurred during registration. Please try again.', 'danger')
+        except ValueError as e:  # 捕获register_user中抛出的ValueError
+            flash(str(e), 'warning')  # 将错误信息闪现给用户
 
     return render_template('register.html')
 
@@ -41,13 +52,17 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        user = validate_user(username, password)
 
-        if user:
-            session['username'] = username
-            return redirect(url_for('load_website'))
-        else:
-            flash('Invalid username or password')
+        try:
+            user = validate_user(username, password)
+            if user:
+                session['username'] = username
+                flash('Login successful. Redirecting...', 'success')
+                return redirect(url_for('load_website'))
+            else:
+                raise ValueError('Invalid username or password.')  # 显式抛出错误以便被捕获并闪现给用户
+        except ValueError as e:
+            flash(str(e), 'danger')  # 显示登录失败的具体原因
 
     return render_template('login.html')
 
