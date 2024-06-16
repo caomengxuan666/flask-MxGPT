@@ -3,6 +3,7 @@ import pymysql
 from dbutils.pooled_db import PooledDB
 import uuid
 from psycopg2 import IntegrityError
+from sqlCheck import check_mysql_keywords,check_special_characters
 
 # 配置数据库连接池
 POOL = PooledDB(
@@ -37,6 +38,13 @@ def check_unique_username_and_id(username):
 def register_user(username, password):
     if not check_unique_username_and_id(username):
         raise ValueError("Username or ID already exists.")
+
+    # V1.5.0 新增：检查用户名是否包含MySQL关键字
+    if not check_mysql_keywords(username):
+        raise ValueError("Username cannot contain MySQL keywords")
+
+    if not check_special_characters(username):
+        raise ValueError("Username cannot contain special characters.")
 
     hashed_password = hashlib.sha256(password.encode()).hexdigest()
     user_id = str(uuid.uuid4())

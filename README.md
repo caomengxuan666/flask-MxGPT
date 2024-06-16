@@ -38,3 +38,12 @@ python3 app.py --mode=[local|server]
 ```angular2html
 nohup python3 app.py --mode=[local|server] &
 ```
+
+### v1.5.0
+* 紧急更新，将前端后端注册登录的时候加了一个字符串正则匹配判断，用于防止SQL注入。以及做了特殊字符处理，特殊的与SQL相关的也不能被用于注册
+，这样大大提升安全性。
+
+* ***如果要在服务器持续运行并且能看到运行日志，请在控制台输入***
+```angular2html
+nohup python3 app.py --mode=[local|server] output.log 2>&1 &
+```
