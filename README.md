@@ -33,3 +33,8 @@ python3 app.py --mode=[local|server]
 * 成功在本地连接到服务器的MySQL数据库，实现本地和服务器的数据库的同步和远程管理。
 * 修改了注册的逻辑，将**uuid**和**username**作为主键，实现用户唯一性。并且注册失败会显示信息。
 * 修改了登录的逻辑，当登录失败的时候会显示信息。
+
+* ***如果要在服务器持续运行，请在控制台输入***
+```angular2html
+nohup python3 app.py --mode=[local|server] &
+```
