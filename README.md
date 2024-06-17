@@ -47,3 +47,9 @@ nohup python3 app.py --mode=[local|server] &
 ```angular2html
 nohup python3 app.py --mode=[local|server] output.log 2>&1 &
 ```
+
+### v1.6.0
+* 大更新，更新了图像保存，我们现在可以在服务器上存储用户传入的图像并在数据库上对其进行记录。
+* 更新了config文件夹，用yaml文件来配置一些属性
+* 对文件夹的安排位置做了大的更新
+* 未来将会把数据库的URL存储完善，目前还没有全部实现好，但是已经实现了基本的图片存储功能。
