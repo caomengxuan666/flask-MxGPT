@@ -3,7 +3,7 @@ import pymysql
 from dbutils.pooled_db import PooledDB
 import uuid
 from psycopg2 import IntegrityError
-from sqlCheck import check_mysql_keywords,check_special_characters
+from model.sqlCheck import check_mysql_keywords,check_special_characters
 
 # 配置数据库连接池
 POOL = PooledDB(
