@@ -3,6 +3,6 @@ app_settings:
 
 database_settings:
   row_img_save_pth: "/www/wwwroot/row_img/"
-  process_img_save_pth: "/www/wwwroot/process_img/"
+  processed_img_save_pth: "/www/wwwroot/process_img/"
   #row_img_save_pth: "D:/pythonWeb/flask-MxGPT"
   #processed_img_save_pth: "D:/pythonWeb/flask-MxGPT"
