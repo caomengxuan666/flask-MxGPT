@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration and Login Forms</title>
+    <link rel="stylesheet" href="../static/reg_log.css">
+</head>
+<body>
+<div class="container">
+    <!-- Sign Up -->
+    <div class="container__form container--signup">
+        <form action="{{ url_for('reg_or_login') }}" method="post" class="form" id="form1">
+            <h2 class="form__title">Sign Up</h2>
+            <input type="text" name="username" placeholder="User" class="input" required/>
+            <input type="email" name="email" placeholder="Email" class="input" required/> <!-- 注意这里使用'email'作为键名 -->
+            <input type="password" name="password" placeholder="Password" class="input" required/>
+            <input type="hidden" name="action" value="register"> <!-- 添加此隐藏字段 -->
+            <button class="btn">Sign Up</button>
+        </form>
+    </div>
+
+
+    <!-- Sign In -->
+    <div class="container__form container--signin">
+        <form action="{{ url_for('reg_or_login') }}" method="post" class="form" id="form2">
+            <h2 class="form__title">Sign In</h2>
+            <input type="email" name="email" placeholder="Email" class="input" required/> <!-- 使用'email'作为用户名输入 -->
+            <input type="password" name="password" placeholder="Password" class="input" required/>
+            <input type="hidden" name="action" value="login"> <!-- 添加此隐藏字段 -->
+            <a href="#" class="link">Forgot your password?</a>
+            <button class="btn">Sign In</button>
+        </form>
+    </div>
+    <!-- Overlay -->
+    <div class="container__overlay">
+        <div class="overlay">
+            <div class="overlay__panel overlay--left">
+                <button class="btn" id="signIn">Sign In</button>
+            </div>
+            <div class="overlay__panel overlay--right">
+                <button class="btn" id="signUp">Sign Up</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../static/reg_log.js"></script>
+</body>
+</html>
