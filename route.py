@@ -1,5 +1,6 @@
-from flask import Flask, request, send_file, render_template, flash, redirect, url_for, session, send_from_directory
-from model.loadUserDataBase import register_user, validate_user
+from flask import Flask, request, send_file, render_template, flash, redirect, url_for, session, send_from_directory, \
+    jsonify
+from model.loadUserDataBase import register_user, validate_userbyname, validate_userbyemail
 from model.seg import segment_image
 import cv2
 import numpy as np
@@ -28,53 +29,56 @@ def user_avatar():
     return send_from_directory('static', 'user_avatar.jpg')
 
 
-# 注册
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-
-        try:
-            user_id = register_user(username, password)
-            if user_id:
-                flash('Registration successful. Please login.', 'success')
-                return redirect(url_for('login'))
-            else:
-                flash('An unexpected error occurred during registration. Please try again.', 'danger')
-        except ValueError as e:  # 捕获register_user中抛出的ValueError
-            flash(str(e), 'warning')  # 将错误信息闪现给用户
-
-    return render_template('register.html')
-
-
-# 登录
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-
-        try:
-            user = validate_user(username, password)
-            if user:
-                # 登录成功，将用户名和id存储到session中
-                session['username'] = username
-                flash('Login successful. Redirecting...', 'success')
-                return redirect(url_for('load_website'))
-            else:
-                raise ValueError('Invalid username or password.')  # 显式抛出错误以便被捕获并闪现给用户
-        except ValueError as e:
-            flash(str(e), 'danger')  # 显示登录失败的具体原因
-
-    return render_template('login.html')
-
-
 # 登出
 @app.route('/logout')
 def logout():
     session.pop('username', None)
     return redirect(url_for('load_website'))
+
+
+# 登录
+
+
+@app.route('/reg_log', methods=['GET', 'POST'])
+def reg_or_login():
+    if request.method == 'POST':
+        action = request.form.get('action')
+
+        if action == 'register':
+            username = request.form['username']
+            email = request.form['email']
+            password = request.form['password']
+
+            try:
+                user_id = register_user(username, email, password)
+                if user_id:
+                    return jsonify({"success": True, "message": "Registration successful. Please login."}), 200
+                else:
+                    return jsonify({"success": False,
+                                    "message": "An unexpected error occurred during registration. Please try again."}), 400
+            except ValueError as e:
+                return jsonify({"success": False, "message": str(e)}), 400
+
+        elif action == 'login':
+            email = request.form['email']
+            password = request.form['password']
+            try:
+                user = validate_userbyemail(email, password)
+                if user:
+                    # 登录成功，将用户信息存储到session中
+                    # session['email'] = email
+                    session['username'] = user[1]
+                    return jsonify({"success": True, "message": "Login successful. Redirecting..."})
+                else:
+                    return jsonify({"success": False, "message": "Invalid username or password."}), 401
+            except ValueError as e:
+                return jsonify({"success": False, "message": str(e)}), 400
+
+        else:
+            return jsonify({"success": False, "message": "Invalid action selected."}), 400
+
+    # GET请求或表单提交无效时，返回带有注册和登录选项的页面
+    return render_template('reg_log.html')
 
 
 # 诊断的按钮事件
@@ -90,7 +94,6 @@ def segment():
     byte_io = io.BytesIO()
     mask_image.save(byte_io, 'PNG')
     byte_io.seek(0)
-
 
     # 使用InfoRecord类记录图像信息到数据库
     try:
@@ -108,7 +111,7 @@ def segmentPage():
     if 'username' not in session:
         # 如果用户未登录，则重定向到登录页面
         flash('请先登录以访问此页面。')
-        return redirect(url_for('login'))  # 假设'login'是您的登录页面路由
+        return redirect(url_for('reg_or_login'))
     else:
         # 用户已登录，渲染并返回'segmentPage'或相关页面
         return render_template('index.html')  # 注意：这里假设您希望渲染的是'segmentPage.html'而不是'index.html'

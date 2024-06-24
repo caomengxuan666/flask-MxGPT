@@ -35,7 +35,7 @@ def check_unique_username_and_id(username):
     conn.close()
     return result is None
 
-def register_user(username, password):
+def register_user(username, email,password):
     if not check_unique_username_and_id(username):
         raise ValueError("Username or ID already exists.")
 
@@ -52,8 +52,8 @@ def register_user(username, password):
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
-        cursor.execute("INSERT INTO users (id, username, password) VALUES (%s, %s, %s)",
-                       (user_id, username, hashed_password))
+        cursor.execute("INSERT INTO users (id,username, email,password) VALUES (%s,%s, %s, %s)",
+                       (user_id,username, email, hashed_password))
         conn.commit()
     except IntegrityError:
         # 如果插入时仍发生唯一性冲突（理论上前面的检查应避免这种情况，但保险起见还是捕获异常）
@@ -64,12 +64,24 @@ def register_user(username, password):
 
     return user_id
 
-def validate_user(username, password):
+def validate_userbyname(username, password):
     hashed_password = hashlib.sha256(password.encode()).hexdigest()
 
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM users WHERE username = %s AND password = %s", (username, hashed_password))
+    user = cursor.fetchone()
+    cursor.close()
+    conn.close()
+
+    return user
+
+def validate_userbyemail(email, password):
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM users WHERE email = %s AND password = %s", (email, hashed_password))
     user = cursor.fetchone()
     cursor.close()
     conn.close()
