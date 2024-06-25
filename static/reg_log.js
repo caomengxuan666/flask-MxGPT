@@ -48,7 +48,7 @@ function submitForm(formId, actionType) {
     })
     .catch(error => {
         console.error('Error:', error);
-        alert("There was a network issue. Please try again later.");
+        alert("你可能重复注册了账号，或者是输入了错误的账号密码，请检查。");
     });
 }
 
