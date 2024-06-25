@@ -7,22 +7,24 @@ body {
 }
 
 header {
-    background-color: #f1f1f1;
+    background-color: transparent; /* 透明背景，避免覆盖视频 */
     text-align: center;
     padding: 20px;
+    z-index: 1; /* 确保header在视频之上 */
 }
 
 h1 {
-    color: #333;
+    color: #fff; /* 文字颜色改为白色 */
     margin-bottom: 10px;
 }
 
 p {
-    color: #666;
+    color: #fff; /* 文字颜色改为白色 */
 }
 
 section {
     margin: 20px 0;
+    color: #fff; /* 文字颜色改为白色 */
 }
 
 #cta-buttons {
@@ -48,12 +50,12 @@ section {
     color: white;
 }
 
-.third{
+.third {
     background-color: darkcyan;
     color: coral;
 }
 
-.third:hover{
+.third:hover {
     background-color: #4cae4c; /* 深绿色，增强交互反馈 */
     opacity: 0.9;
 }
@@ -65,7 +67,7 @@ section {
 /* 用户显示 */
 /* 导航栏样式 */
 .navbar {
-    background-color: #f8f9fa; /* 背景色可以根据你的设计调整 */
+    background-color: transparent; /* 透明背景，避免覆盖视频 */
     padding: 10px 0;
     position: fixed;
     top: 0;
@@ -97,6 +99,82 @@ section {
 .username, .not-logged {
     display: inline-block;
     vertical-align: middle;
-    color: #343a40;
+    color: #fff; /* 文字颜色改为白色 */
     font-weight: bold;
+}
+
+/* 进入页面的动画效果 */
+@keyframes fadeInFromBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* 调整为全屏高度，或按需设定 */
+    overflow: hidden;
+}
+
+.content-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1); /* 修改为白色的透明背景 */
+    backdrop-filter: blur(10px); /* 添加模糊效果 */
+    border-radius: 10px; /* 可选，增加圆角效果 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 可选，增加阴影效果 */
+    opacity: 0; /* 初始隐藏 */
+    transition: opacity 5s ease; /* 5秒渐显动画 */
+    z-index: 1; /* 确保内容层在视频之上 */
+}
+
+.content-wrapper.visible {
+    opacity: 1;
+}
+
+/* 视频样式 */
+.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 保持视频宽高比并填充容器 */
+}
+
+/* 欢迎文字样式 */
+.welcome-text {
+    position: absolute;
+    bottom: 30%; /* 调整文字距离底部的位置 */
+    left: 50%;
+    transform: translateX(-50%); /* 居中文字 */
+    font-size: 4em; /* 根据需要调整字体大小 */
+    color: #fff; /* 文字颜色 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* 文字阴影效果 */
+    opacity: 0; /* 初始不显示 */
+    animation: fadeIn 3s forwards; /* 动画名称和时长，以及是否保持最终状态 */
+}
+
+/* 渐显动画 */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+main {
+    animation: fadeInFromBottom 0.8s ease both;
 }

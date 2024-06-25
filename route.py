@@ -26,7 +26,7 @@ def load_website():
 # 加载用户头像
 @app.route('/user_avatar', methods=['GET'])
 def user_avatar():
-    return send_from_directory('static', 'user_avatar.jpg')
+    return send_from_directory('static', 'img/avatar/default_user_avatar.jpg')
 
 
 # 登出
