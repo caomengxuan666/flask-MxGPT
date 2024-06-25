@@ -47,6 +47,7 @@ body {
     overflow: hidden;
     position: relative;
     width: 100%;
+    animation: slideInFromBottom 1.0s cubic-bezier(0.25, 0.1, 0.25, 1) both;
 }
 
 .container__form {
@@ -209,5 +210,17 @@ body {
     100% {
         opacity: 1;
         z-index: 5;
+    }
+}
+
+/* 新增动画关键帧 */
+@keyframes slideInFromBottom {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
     }
 }
