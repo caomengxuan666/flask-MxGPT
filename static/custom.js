@@ -8,3 +8,4 @@ function submitAvatar() {
     var form = document.querySelector('#avatarModal form');
     form.submit();
 }
+

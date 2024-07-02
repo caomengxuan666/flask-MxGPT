@@ -29,6 +29,8 @@ document.querySelector('.file-label').addEventListener('click', function(event) 
 document.getElementById('segmentButton').addEventListener('click', function() {
     const fileInput = document.getElementById('fileInput');
     if (fileInput.files.length > 0) {
+        showProgressBar(); // 显示进度条
+
         const file = fileInput.files[0];
         const formData = new FormData();
         formData.append('image', file);
@@ -39,6 +41,8 @@ document.getElementById('segmentButton').addEventListener('click', function() {
         })
             .then(response => response.blob())
             .then(blob => {
+                hideProgressBar(); // 隐藏进度条
+
                 const url = URL.createObjectURL(blob);
                 const outputImage = document.getElementById('outputImage');
                 outputImage.src = url;
@@ -47,8 +51,36 @@ document.getElementById('segmentButton').addEventListener('click', function() {
                 outputImageWrapper.classList.remove('no-image');
                 outputImageWrapper.classList.add('has-image');
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error =>{
+                hideProgressBar(); // 如果有错误也隐藏进度条
+                console.error('Error:', error);
+    });
     } else {
         alert('Please upload an image first.');
     }
 });
+
+function showProgressBar() {
+    const progressBar = document.getElementById('progressBar');
+    progressBar.style.display = 'block';
+    simulateProgress(); // 开始模拟进度
+}
+
+function hideProgressBar() {
+    const progressBar = document.getElementById('progressBar');
+    progressBar.style.display = 'none';
+}
+
+// 模拟进度条填充的函数
+function simulateProgress() {
+    let width = 0;
+    const progressBarFill = document.getElementById('progressBarFill');
+    const interval = setInterval(() => {
+        if (width >= 100) {
+            clearInterval(interval);
+        } else {
+            width += 10; // 增加宽度，这里可以根据需要调整速度
+            progressBarFill.style.width = width + '%';
+        }
+    }, 100); // 每100毫秒检查一次
+}

@@ -6,6 +6,20 @@
     <title>基于MetaGPT的医学影像分割诊断</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='SegmentPage_style.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <style>        #progressBar {
+        height: 20px;
+        background-color: #f3f3f3;
+        border-radius: 5px;
+        margin: 10px 0;
+        overflow: hidden;
+    }
+    #progressBarFill {
+        height: 100%;
+        background-color: #4CAF50; /* 进度条颜色 */
+        width: 0%; /* 初始宽度为0 */
+        transition: width 0.5s; /* 过渡效果 */
+    }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -21,6 +35,9 @@
         <div class="image-wrapper no-image" id="outputImageWrapper">
             <img id="outputImage" class="image" src="" alt="Segmented Image">
         </div>
+    </div>
+    <div id="progressBar" style="display:none;">
+        <div id="progressBarFill"></div>
     </div>
     <button id="segmentButton">开始分割诊断</button>
 </div>
