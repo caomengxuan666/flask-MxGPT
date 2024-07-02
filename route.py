@@ -7,6 +7,7 @@ import numpy as np
 import io
 from PIL import Image
 from model.recordUserInfo import InfoRecord
+from model.static_DR_Enhance import ImageEnhancer  # 确保从正确的路径导入ImageEnhancer类
 import yaml
 
 with open('config/route.yaml', 'r') as file:
@@ -104,7 +105,7 @@ def segment():
     return send_file(byte_io, mimetype='image/png')
 
 
-# 诊断页面
+# 医学影像分割页面
 @app.route('/segmentPage', methods=['GET'])
 def segmentPage():
     # 检查用户是否已登录，例如通过验证session中的用户名是否存在
@@ -114,4 +115,42 @@ def segmentPage():
         return redirect(url_for('reg_or_login'))
     else:
         # 用户已登录，渲染并返回'segmentPage'或相关页面
-        return render_template('index.html')  # 注意：这里假设您希望渲染的是'segmentPage.html'而不是'index.html'
+        return render_template('SegmentPage.html')  # 注意：这里假设您希望渲染的是'segmentPage.html'而不是'SegmentPage.html'
+
+# 医学影像增强界面
+@app.route('/DR_enhancePage', methods=['GET'])
+def DR_enhancePage():
+    # 检查用户是否已登录，例如通过验证session中的用户名是否存在
+    if 'username' not in session:
+        # 如果用户未登录，则重定向到登录页面
+        flash('请先登录以访问此页面。')
+        return redirect(url_for('reg_or_login'))
+    else:
+        # 用户已登录，渲染并返回'enhancePage'或相关页面
+        return render_template('enhancePage.html')
+
+@app.route('/DR_enhance', methods=['POST'])
+def DR_enhance():
+    if 'image' not in request.files:
+        return 'No image uploaded', 400
+
+    file = request.files['image']
+    username = session.get('username')  # 注意确保在实际应用中已设置session
+
+    # 读取并解码图像
+    image = cv2.imdecode(np.frombuffer(file.read(), np.uint8), cv2.IMREAD_COLOR)
+
+    # 实例化ImageEnhancer并进行图像处理
+    image_enhancer = ImageEnhancer(image=image)  # 假设ImageEnhancer接受字节数据
+    processed_image = image_enhancer.enhance_image()  # 或者是其他处理方法
+
+    # 将OpenCV图像转换为PIL图像以便保存到BytesIO
+    pil_image = cv2.cvtColor(processed_image, cv2.COLOR_BGR2RGB)
+    pil_image = Image.fromarray(pil_image)
+
+    # 创建BytesIO对象并保存图像
+    byte_io = io.BytesIO()
+    pil_image.save(byte_io, format='PNG')
+    byte_io.seek(0)
+
+    return send_file(byte_io, mimetype='image/png')
