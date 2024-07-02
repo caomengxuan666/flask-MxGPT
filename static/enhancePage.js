@@ -79,7 +79,7 @@ function simulateProgress() {
         if (width >= 100) {
             clearInterval(interval);
         } else {
-            width += 3; // 增加宽度，这里可以根据需要调整速度
+            width += 10; // 增加宽度，这里可以根据需要调整速度
             progressBarFill.style.width = width + '%';
         }
     }, 100); // 每100毫秒检查一次
