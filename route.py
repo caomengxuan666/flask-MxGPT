@@ -1,3 +1,5 @@
+import time
+
 from flask import Flask, request, send_file, render_template, flash, redirect, url_for, session, send_from_directory, \
     jsonify
 from model.loadUserDataBase import register_user, validate_userbyname, validate_userbyemail
@@ -152,5 +154,8 @@ def DR_enhance():
     byte_io = io.BytesIO()
     pil_image.save(byte_io, format='PNG')
     byte_io.seek(0)
+
+    # 等待三秒
+    time.sleep(3)
 
     return send_file(byte_io, mimetype='image/png')
