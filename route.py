@@ -146,16 +146,11 @@ def DR_enhance():
     image_enhancer = ImageEnhancer(image=image)  # 假设ImageEnhancer接受字节数据
     processed_image = image_enhancer.enhance_image()  # 或者是其他处理方法
 
-    # 将OpenCV图像转换为PIL图像以便保存到BytesIO
-    pil_image = cv2.cvtColor(processed_image, cv2.COLOR_BGR2RGB)
-    pil_image = Image.fromarray(pil_image)
+    p_image = Image.fromarray(processed_image)
 
     # 创建BytesIO对象并保存图像
     byte_io = io.BytesIO()
-    pil_image.save(byte_io, format='PNG')
+    p_image.save(byte_io, format='PNG')
     byte_io.seek(0)
-
-    # 等待三秒
-    time.sleep(3)
 
     return send_file(byte_io, mimetype='image/png')

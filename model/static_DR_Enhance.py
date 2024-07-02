@@ -1,3 +1,5 @@
+import time
+
 import cv2
 import numpy as np
 
@@ -55,6 +57,8 @@ class ImageEnhancer:
 
         # 中值滤波以去噪
         denoised_enhanced_image = cv2.medianBlur(enhanced_image, ksize=3)
+
+        time.sleep(3)
 
         return denoised_enhanced_image
 
