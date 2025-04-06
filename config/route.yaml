@@ -2,8 +2,8 @@ app_settings:
   secret_key: bab953b7-c202-43c5-b964-6c93f560ebc1
 
 database_settings:
-  row_img_save_pth: "/www/wwwroot/row_img/"
-  processed_img_save_pth: "/www/wwwroot/process_img/"
+  row_img_save_pth: "/home/cmx/codespace/flask-MxGPT/static/raw_img"
+  processed_img_save_pth: "/home/cmx/codespace/flask-MxGPT/static/process_img/"
 
   #row_img_save_pth: "D:/pythonWeb/flask-MxGPT"
   #processed_img_save_pth: "D:/pythonWeb/flask-MxGPT"

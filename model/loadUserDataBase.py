@@ -2,7 +2,6 @@ import hashlib
 import pymysql
 from dbutils.pooled_db import PooledDB
 import uuid
-from psycopg2 import IntegrityError
 from model.sqlCheck import check_mysql_keywords,check_special_characters
 
 # 配置数据库连接池
@@ -14,7 +13,7 @@ POOL = PooledDB(
     blocking=True,
     setsession=[],
     ping=0,
-    host='120.26.73.234',
+    host='127.0.0.1',
     port=3306,
     user='root',
     password='mx123321',
@@ -55,9 +54,6 @@ def register_user(username, email,password):
         cursor.execute("INSERT INTO users (id,username, email,password) VALUES (%s,%s, %s, %s)",
                        (user_id,username, email, hashed_password))
         conn.commit()
-    except IntegrityError:
-        # 如果插入时仍发生唯一性冲突（理论上前面的检查应避免这种情况，但保险起见还是捕获异常）
-        raise ValueError("Username or ID already exists during insertion.")
     finally:
         cursor.close()
         conn.close()
